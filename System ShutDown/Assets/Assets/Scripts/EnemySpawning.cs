@@ -2,8 +2,9 @@
 using System.Collections;
 
 public class EnemySpawning : MonoBehaviour {
-	public int totalWaveValue, currentWaveValue, nE1, nE2, nE3, eH1, eH2, eH3, eD1, eD2, eD3, rI;
-	public GameObject e1, e2, e3;
+	public int totalWaveValue, currentWaveValue, nE1, nE2, nE3, eH1, eH2, eH3, eD1, eD2, eD3, rI, rL;
+	public GameObject e1, e2, e3, spawn1, spawn2, spawn3;
+	public Vector3 spawnSelect; 
 
 	void Start () {
 		//Time.timeScale = 0.1F;
@@ -44,19 +45,30 @@ public class EnemySpawning : MonoBehaviour {
 	}
 
 	public void SpawnEnemy(){
-		rI = Random.Range (1, 4);
 
+		rL = Random.Range (1, 4);
+		if (rL == 1) {
+			spawnSelect = spawn1.transform.position;
+		}
+		if (rL == 2) {
+			spawnSelect = spawn2.transform.position;
+		}
+		if (rL == 3) {
+			spawnSelect = spawn3.transform.position;
+		}
+	
+		rI = Random.Range (1, 4);
 		if (rI == 1 && currentWaveValue + (eH1 + eD1) < totalWaveValue) {
 			nE1 ++;
-			Instantiate (e1, new Vector3 (0,0,0), Quaternion.identity);
+			Instantiate (e1, spawnSelect, Quaternion.identity);
 			CheckWaveValue();
 		} else if (rI == 2 && currentWaveValue + (eH2 + eD2) < totalWaveValue) {
 			nE2 ++;
-			Instantiate (e2, new Vector3 (0,0,0), Quaternion.identity);
+			Instantiate (e2, spawnSelect, Quaternion.identity);
 			CheckWaveValue();
 		} else if (rI == 3 && currentWaveValue + (eH3 + eD3) < totalWaveValue) {
 			nE3 ++;
-			Instantiate (e3, new Vector3 (0,0,0), Quaternion.identity);
+			Instantiate (e3, spawnSelect, Quaternion.identity);
 			CheckWaveValue();
 		}
 	}
